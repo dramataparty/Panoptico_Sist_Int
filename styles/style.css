@@ -1,6 +1,13 @@
 body{
-background-color: #3C393C;
-color: #FFFFFF;
-font-family: 'Courier New', Courier, monospace;
-text-shadow: 2px 2px 4px #000000;
+    background-color: #3C393C;
+    color: #FFFFFF;
+    font-family: 'xband-ro', sans-serif;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+@font-face {
+    font-family: 'xband-ro';
+    src: url("../media/xband-ro.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
