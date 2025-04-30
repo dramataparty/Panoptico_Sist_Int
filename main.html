@@ -1,1 +1,40 @@
-<p> PANOPTICO</p>
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Panopticon</title>
+        <style>
+            body {
+                background-color: #f2f2f2;
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+            #camerafeed {
+                margin: auto;
+                width: 50%;
+            }
+            #video {
+                width: 100%;
+                height: auto;
+            }
+            #canvas {
+                width: 100%;
+                height: auto;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Panopticon</h1>
+        <p id="question_text"></p>
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+        <div id="camerafeed">
+            <video id="video" autoplay></video>
+            <canvas id="canvas"></canvas>
+        </div>
+    </body>
+
+</html>
