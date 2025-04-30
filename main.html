@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Panopticon</title>
-        <style>
-            body {
-                background-color: #f2f2f2;
-                font-family: Arial, sans-serif;
-                text-align: center;
-            }
-            #camerafeed {
-                margin: auto;
-                width: 50%;
-            }
-            #video {
-                width: 100%;
-                height: auto;
-            }
-            #canvas {
-                width: 100%;
-                height: auto;
-                border: 1px solid black;
-            }
-            #question {
-                margin-top: 20px;
-                display: none; /* Initially hidden */
-            }
-            #question_text {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Panopticon</h1>
-        <div id="question">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panopticon</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #camerafeed {
+            margin: auto;
+            width: 50%;
+        }
+        #video, #canvas {
+            width: 100%;
+            height: auto;
+        }
+        #canvas {
+            border: 1px solid black;
+        }
+        #question {
+            margin-top: 20px;
+            display: none;
+        }
+        #question_text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="scripts/main.js"></script>
+</head>
+<body>
+    <h1>Panopticon</h1>
+    <div id="question">
         <p id="question_text"></p>
         <button id="yes">Yes</button>
         <button id="no">No</button>
-        </div>
-        <div id="camerafeed">
-            <video id="video" autoplay></video>
-            <canvas id="canvas"></canvas>
-        </div>
-    </body>
-
+    </div>
+    <div id="camerafeed">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
 </html>
+
