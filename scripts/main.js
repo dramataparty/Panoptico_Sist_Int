@@ -1,14 +1,45 @@
-initial_feed_randomizer(
+function initial_feed_randomizer( /**randomizes the feed shown to the user on page load, should be the one with 0 int level */
+    feed_dictionary, /**the dictionary containing the feeds */
+    feed_div, /**the div where the feed will be displayed */
+    feed_index /**the index of the feed to be displayed */
+) {
+    feed_div.src = feed_dictionary[feed_index][Object.keys(feed_dictionary[feed_index])[Math.floor(Math.random() * Object.keys(feed_dictionary[feed_index]).length)]] /**randomly selects a feed from the dictionary */
+    feed_div.setAttribute("width", "100%") /**sets the width of the feed to 100% */
+    feed_div.setAttribute("height", "100%") /**sets the height of the feed to 100% */
+    feed_div.setAttribute("controls", "true") /**sets the controls of the feed to true */
+    feed_div.setAttribute("autoplay", "true") /**sets the autoplay of the feed to true */
+    feed_div.setAttribute("loop", "true") /**sets the loop of the feed to true */
+}
 
-)
-initial_question_randomizer(
+function initial_question( /*displays an initial question related to the currently displayed feed to the user, for example if football field it would ask "have you ever been to a football field? then displays it if yes, if no shows a random different one in the same intimacy level"
+     */
+    feed_dictionary, /**the dictionary containing the feeds */
+    feed_div, /**the div where the feed will be displayed */
+    feed_index /**the index of the feed to be displayed */
+) {
+    
+}
 
-)
-acess_user_camera( /**opens the user's camera feed on the page */
-    document.getElementById('video'),
-    document.getElementById('canvas')
+function acess_user_camera( /**accesses the user's camera */){
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false }) /**gets the user's camera feed */
+        .then(function(stream) { /**if the camera feed is found */
+            document.getElementById('video').srcObject = stream; /**sets the source of the video to the camera feed */
+            document.getElementById('video').play(); /**plays the video */
+        })
+        .catch(function(err) { /**if the camera feed is not found */
+            console.log("An error occurred: " + err); /**logs the error */
+        });
+}
+function display_feed( /**displays the feed on the page */
+   
+) {
+    var feed_div = document.getElementById("feed") /**gets the div where the feed will be displayed */
+    var feed_index = Math.floor(Math.random() * Object.keys(feed_dictionary).length) /**randomly selects the index of the feed to be displayed */
+    initial_feed_randomizer(feed_dictionary, feed_div, feed_index) /**calls the function to randomize the feed */
+    initial_question(feed_dictionary, feed_div, feed_index) /**calls the function to display the initial question */
 
-)
+}
+
 
 feed_dictionary = new Object()
 var feed_dictionary = {
