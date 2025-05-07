@@ -1,22 +1,24 @@
-function initial_feed_randomizer( /**randomizes the feed shown to the user on page load, should be the one with 0 int level */
-    feed_dictionary, /**the dictionary containing the feeds */
-    feed_div, /**the div where the feed will be displayed */
-    feed_index /**the index of the feed to be displayed */
-) {
-    feed_div.src = feed_dictionary[feed_index][Object.keys(feed_dictionary[feed_index])[Math.floor(Math.random() * Object.keys(feed_dictionary[feed_index]).length)]] /**randomly selects a feed from the dictionary */
-    feed_div.setAttribute("width", "100%") /**sets the width of the feed to 100% */
-    feed_div.setAttribute("height", "100%") /**sets the height of the feed to 100% */
-    feed_div.setAttribute("controls", "true") /**sets the controls of the feed to true */
-    feed_div.setAttribute("autoplay", "true") /**sets the autoplay of the feed to true */
-    feed_div.setAttribute("loop", "true") /**sets the loop of the feed to true */
+var current_intimacy_level = 0; /**current intimacy level of the user */
+
+
+function feed_randomizer(){ /**displays a random feed of the current intimacy level */
+    var feed_div = document.getElementById("camerafeed"); /**gets the div where the feed will be displayed */
+    var feed_index = Math.floor(Math.random() * Object.keys(feed_dictionary).length); /**gets a random index from the feed dictionary */
+    var feed_key = Object.keys(feed_dictionary[feed_index])[Math.floor(Math.random() * Object.keys(feed_dictionary[feed_index]).length)]; /**gets a random key from the feed dictionary */
+    var feed_value = feed_dictionary[feed_index][feed_key]; /**gets the value of the random key from the feed dictionary */
+    feed_div.innerHTML = "<iframe src='" + feed_value + "' width='100%' height='100%'></iframe>"; /**sets the inner HTML of the div to the iframe with the source of the random feed */
+    display_question(feed_dictionary, feed_div, feed_index); /**displays a question related to the currently displayed feed to the user */
+
 }
 
-function initial_question( /*displays an initial question related to the currently displayed feed to the user, for example if football field it would ask "have you ever been to a football field? then displays it if yes, if no shows a random different one in the same intimacy level"
+
+function display_question( /*displays a question related to the currently displayed feed to the user, for example if football field it would ask "have you ever been to a football field? then displays it if yes, if no shows a random different one in the same intimacy level"
      */
     feed_dictionary, /**the dictionary containing the feeds */
     feed_div, /**the div where the feed will be displayed */
     feed_index /**the index of the feed to be displayed */
 ) {
+/** write related questions for each feed */
     
 }
 
@@ -30,14 +32,10 @@ function acess_user_camera( /**accesses the user's camera */){
             console.log("An error occurred: " + err); /**logs the error */
         });
 }
-function display_feed( /**displays the feed on the page */
+function display_feed( /**displays the feed on the page within camerafeed div*/
    
 ) {
-    var feed_div = document.getElementById("feed") /**gets the div where the feed will be displayed */
-    var feed_index = Math.floor(Math.random() * Object.keys(feed_dictionary).length) /**randomly selects the index of the feed to be displayed */
-    initial_feed_randomizer(feed_dictionary, feed_div, feed_index) /**calls the function to randomize the feed */
-    initial_question(feed_dictionary, feed_div, feed_index) /**calls the function to display the initial question */
-
+    
 }
 
 
@@ -45,35 +43,35 @@ feed_dictionary = new Object()
 var feed_dictionary = {
     0 : {
         "Exterior de Escola" : "http://134.124.120.76/view/viewer_index.shtml?id=13736",
-        "Campo de Futebol" : "http://91.231.166.180:86/view/view.shtml?id=488&imagepath=%2Fmjpg%2Fvideo.mjpg",
-        "Campo de Ténis" : "http://213.124.95.98:8082/view/index.shtml",
-        "Lago" : "http://216.14.224.50/view/viewer_index.shtml?id=5223",
+        "Campo de Futebol" : "http://91.231.166.180:86/mjpg/video.mjpg",
+        "Campo de Ténis" : "http://213.124.95.98:8082/mjpg/video.mjpg",
+        "Lago" : "http://216.14.224.50/mjpg/video.mjpg",
     },
     1 : {
         "Hospital" : "http://203.181.0.118:6003/live/index.html?Language=0",
-        "Auditório" : "http://70.90.194.90:8888/cgi-bin/guestimage.html",
-        "Loja" : "http://78.186.67.194:50001/CgiStart?page=Single&Language=0",
-        "Estacionamento Subterrâneo" : "http://89.97.231.70:8082/control/userimage.html",
-        "Lobby de Hotel" : "http://71.249.87.61/control/userimage.html",
-        "Entrada de Hotel" : "http://75.51.6.196:8080/control/userimage.html",
-        "Sweatshop" : "http://96.84.21.221:8082/view/viewer_index.shtml?id=18096",
-        "Lavandaria" : "http://82.64.237.163:8083/view/viewer_index.shtml?id=10214 + http://82.64.237.163:8082/view/viewer_index.shtml?id=10165",
-        "Ginásio" : "http://104.8.103.170/control/userimage.html",
+        "Auditório" : "http://70.90.194.90:8888/cgi-bin/faststream.jpg?stream=full&fps=25&rand=469098",
+        "Loja" : "http://78.186.67.194:50001/transparent.gif",
+        "Estacionamento Subterrâneo" : "http://89.97.231.70:8082/control/faststream.jpg?stream=full&fps=16&rand=764313",
+        "Lobby de Hotel" : "http://71.249.87.61/control/faststream.jpg?stream=full&fps=16&rand=952274",
+        "Entrada de Hotel" : "http://75.51.6.196:8080/control/faststream.jpg?stream=full&fps=16&rand=648524",
+        "Sweatshop" : "http://96.84.21.221:8082/mjpg/video.mjpg",
+        "Lavandaria" : "http://82.64.237.163:8083/mjpg/video.mjpg",
+        "Ginásio" : "http://104.8.103.170/control/faststream.jpg?stream=full&fps=16&rand=387871",
     },
     2 : {
-        "Interior de Elevador" : "http://72.43.190.171:83/view/view.shtml?id=352717&imagepath=%2Fmjpg%2Fvideo.mjpg&size=1",
-        "Senhor a Vender" : "http://93.87.72.254:8082/view/index.shtml",
-        "Corredor" : "http://84.228.110.101:90/live/index.html?Language=0",
+        "Interior de Elevador" : "http://72.43.190.171:83/mjpg/video.mjpg",
+        "Senhor a Vender" : "http://93.87.72.254:8082/mjpg/video.mjpg",
+        "Corredor" : "/cgi-bin/mjpeg?resolution=640x360&amp;quality=1&amp;page=1746627489757&amp;Language=0" /*guardado localmente no site, descobrir como estrair ou usar outra cam */,
         "Porta do Quarto" : "http://209.202.205.86:8080/",
         "Interior da Casa?" : "http://107.131.197.123:8889/",
     },
     3 : {
         "Quarto" : "http://71.41.121.66:8200/#view",
-        "Senhor a Trabalhar" : "http://93.87.72.254:8082/view/index.shtml",
-        "Sala de Máquinas" : "http://www.worldeye.cam/?id=3e2d34b952a75cc0e8d8701a2b78569f",
-        "Casa" : "https://video.nest.com/live/hMsgoEpYmc",
-        "Sala de Estar" : "http://46.231.208.18:9095/jpg/image.jpg",
+        "Sala de Máquinas" : "http://113.161.46.196:8001/webcapture.jpg",
+        "Casa" : "https://stream-ue1-bravo.dropcam.com:443/nexus_aac/0327c32c53d44f0c8dc184f79eb4afd1/playlist.m3u8?public=hMsgoEpYmc",
+        "Sala de Estar" : "http://46.231.208.18:9095/mjpg/video.mjpg",
         "Laboratório" : "http://129.2.146.15/jpg/image.jpg"
     }
 }
+
 

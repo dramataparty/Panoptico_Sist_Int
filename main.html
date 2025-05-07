@@ -4,6 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panopticon</title>
+    <script>
+        let currentFeedIndex = 0;
+        let currentIntimacyLevel = 0;
+        const feedFrame = document.getElementById("feed_frame");
+    
+        // Obtem todos os nomes de feeds para um dado nível
+        function getFeedNames(level) {
+            return Object.keys(feed_dictionary[level]);
+        }
+    
+        // Atualiza o iframe para mostrar um feed específico
+        function updateFeed(level, index) {
+            const feedNames = getFeedNames(level);
+            const feedName = feedNames[index];
+            const feedURL = feed_dictionary[level][feedName];
+            feedFrame.src = feedURL;
+            currentFeedIndex = index;
+        }
+    
+        // Escolhe um feed aleatório do nível 0 ao carregar a página
+        function initializeFeed() {
+            currentIntimacyLevel = 0;
+            const feedNames = getFeedNames(currentIntimacyLevel);
+            const randomIndex = Math.floor(Math.random() * feedNames.length);
+            updateFeed(currentIntimacyLevel, randomIndex);
+        }
+    
+        // Botões de navegação
+        document.addEventListener("DOMContentLoaded", function () {
+            initializeFeed();
+    
+            document.querySelector("#feeds button:nth-child(1)").addEventListener("click", function () {
+                const feedNames = getFeedNames(currentIntimacyLevel);
+                let nextIndex = (currentFeedIndex + 1) % feedNames.length;
+                updateFeed(currentIntimacyLevel, nextIndex);
+            });
+    
+            document.querySelector("#feeds button:nth-child(2)").addEventListener("click", function () {
+                const feedNames = getFeedNames(currentIntimacyLevel);
+                let prevIndex = (currentFeedIndex - 1 + feedNames.length) % feedNames.length;
+                updateFeed(currentIntimacyLevel, prevIndex);
+            });
+        });
+    </script>
+    
     <style>
         body {
             display: flex;
@@ -45,6 +90,12 @@
             margin: 5px;
             cursor: pointer;
         }
+        #feeds {
+            position: relative;
+            top: 120px;
+            left: 10px;
+            z-index: 10;
+        }
     </style>
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -53,15 +104,20 @@
 </head>
 <body>
     <h1>Panopticon</h1>
+    <div id="feeds">
+        <button>  Next </button>
+        <button>  Previous </button>
+    </div>
     <div id="question">
         <p id="question_text"></p>
         <button id="yes">Yes</button>
         <button id="no">No</button>
     </div>
     <div id="camerafeed">
-        <video id="video" autoplay></video>
-        <canvas id="canvas"></canvas>
+        <iframe id="feed_frame" width="100%" height="500px" frameborder="0" allow="autoplay"></iframe>
     </div>
+    
+    
 </body>
 </html>
 
