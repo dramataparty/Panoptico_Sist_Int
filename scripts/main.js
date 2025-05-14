@@ -36,6 +36,110 @@ const feed_dictionary = {
   let currentIntimacyLevel = 0;
   const feedFrame = document.getElementById("feed_frame");
 
+let viewedFeeds = {
+  0: new Set(),
+  1: new Set(),
+  2: new Set(),
+  3: new Set()
+};
+
+const question_text_dictionary = {
+  1: {
+    "Hospital": "Já estiveste num hospital assim tão vazio?",
+    "Auditório": "Este auditório faz-te lembrar algo?",
+    "Lavandaria": "Alguém te vem à mente ao ver esta lavandaria?",
+  },
+  2: {
+    "Interior de Elevador": "Tens medo de elevadores?",
+    "Senhor a Vender": "Já compraste algo de um estranho assim?",
+    "Interior da Casa?": "Reconheces algo nesta casa?",
+  },
+  3: {
+    "Quarto": "Este quarto parece familiar?",
+    "Casa": "Consegues imaginar quem vive aqui?",
+    "Sala de Estar": "Já estiveste num lugar como este?",
+  }
+};
+
+function getFeedNames(level) {
+  return Object.keys(feed_dictionary[level]);
+}
+
+function updateFeed(level, index) {
+  const feedNames = getFeedNames(level);
+  const feedName = feedNames[index];
+  const baseURL = feed_dictionary[level][feedName];
+  const feedURL = baseURL + (baseURL.includes("?") ? "&" : "?") + "t=" + new Date().getTime();
+
+  feedFrame.src = feedURL;
+  currentFeedIndex = index;
+
+  viewedFeeds[level].add(feedName);
+  document.getElementById("question_text").innerText = "";
+
+  maybeTriggerQuestion(level);
+}
+
+function maybeTriggerQuestion(level) {
+  const total = getFeedNames(level).length;
+  const viewed = viewedFeeds[level].size;
+
+  if (viewed / total >= 0.75 && level < 3) {
+    const nextLevel = level + 1;
+    const candidates = Object.keys(question_text_dictionary[nextLevel]);
+    const randomName = candidates[Math.floor(Math.random() * candidates.length)];
+    const question = question_text_dictionary[nextLevel][randomName];
+
+    document.getElementById("question_text").innerText = question;
+
+    document.getElementById("yes").onclick = () => {
+      currentIntimacyLevel = nextLevel;
+      const index = getFeedNames(nextLevel).indexOf(randomName);
+      updateFeed(nextLevel, index);
+    };
+
+    document.getElementById("no").onclick = () => {
+      currentIntimacyLevel = nextLevel;
+      initializeFeed();
+    };
+  }
+}
+
+function initializeFeed() {
+  const feedNames = getFeedNames(currentIntimacyLevel);
+  const randomIndex = Math.floor(Math.random() * feedNames.length);
+  updateFeed(currentIntimacyLevel, randomIndex);
+}
+
+function accessUserCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    .then(stream => {
+      document.getElementById('video').srcObject = stream;
+    })
+    .catch(err => {
+      console.log("An error occurred accessing the camera: " + err);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initializeFeed();
+  accessUserCamera();
+
+  document.getElementById("nextFeed").addEventListener("click", () => {
+    const feedNames = getFeedNames(currentIntimacyLevel);
+    const nextIndex = (currentFeedIndex + 1) % feedNames.length;
+    updateFeed(currentIntimacyLevel, nextIndex);
+  });
+
+  document.getElementById("prevFeed").addEventListener("click", () => {
+    const feedNames = getFeedNames(currentIntimacyLevel);
+    const prevIndex = (currentFeedIndex - 1 + feedNames.length) % feedNames.length;
+    updateFeed(currentIntimacyLevel, prevIndex);
+  });
+
+  // 'yes' e 'no' serão sobrepostos dinamicamente quando perguntas aparecerem
+});
+
 
   function getFeedNames(level) {
     return Object.keys(feed_dictionary[level]);

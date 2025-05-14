@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,18 +15,20 @@
     <h1>Panopticon</h1>
 
     <section id="controls">
-      <button id="prevFeed">Previo</button>
-      <button id="nextFeed">Proximo</button>
+      <button id="prevFeed">Prévio</button>
+      <button id="nextFeed">Próximo</button>
     </section>
 
-    <section id="question">
+    <section id="question" style="display: none;">
       <p id="question_text"></p>
-      <button id="yes">Sim</button>
-      <button id="no">Não</button>
+      <div id="question_buttons">
+        <button id="yes">Sim</button>
+        <button id="no">Não</button>
+      </div>
     </section>
 
     <section id="camerafeed">
-      <iframe id="feed_frame" width="100%" height="900px" frameborder="0"> 
+      <iframe id="feed_frame" width="100%" height="900px" frameborder="0"></iframe>
     </section>
 
     <section id="usercam">

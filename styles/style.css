@@ -59,8 +59,6 @@ button:hover {
 
 #camerafeed {
     margin: 30px auto;
-    width: 80%;
-    max-width: 900px;
     aspect-ratio: 16 / 9;
     border: 5px solid blueviolet;
     box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
