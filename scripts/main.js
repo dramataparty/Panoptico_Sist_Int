@@ -33,20 +33,36 @@ const feed_dictionary = {
 };
 
 const question_text_dictionary = {
+  0: {
+    "Exterior de Escola": "Já tiveste medo de voltar à escola?",
+    "Campo de Futebol": "Alguma vez jogaste futebol numa noite chuvosa?",
+    "Campo de Ténis": "Sabes jogar ténis?",
+    "Lago": "Já alguma vez fizeste um piquenique junto a um lago?",
+  },
   1: {
-    "Hospital": "Já estiveste num hospital  vazio?",
-    "Auditório": "Já alguma vez tiveste panico de palco?",
+    "Hospital": "Já estiveste num hospital vazio?",
+    "Auditório": "Já alguma vez tiveste pânico de palco?",
+    "Loja": "Gostas de fazer compras sozinho?",
+    "Estacionamento Subterrâneo": "Ficas nervoso em estacionamentos subterrâneos?",
+    "Lobby de Hotel": "Já esperaste horas no lobby de um hotel?",
+    "Entrada de Hotel": "Já ficaste num hotel estranho?",
+    "Sweatshop": "Sabes o que é um sweatshop?",
     "Lavandaria": "Frequentemente usas lavandarias?",
+    "Ginásio": "Costumas ir ao ginásio para aliviar o stress?",
   },
   2: {
     "Interior de Elevador": "Tens medo de elevadores?",
     "Senhor a Vender": "Já compraste algo de um estranho?",
-    "Interior da Casa?": "Tens camaras em casa?",
+    "Corredor": "Já te perdeste num corredor escuro?",
+    "Porta do Quarto": "Já bateste à porta de um quarto desconhecido?",
+    "Interior da Casa?": "Tens câmaras em casa?",
   },
   3: {
     "Quarto": "Já estiveste num quarto vazio?",
+    "Sala de Máquinas": "Já viste onde tudo acontece por trás das máquinas?",
     "Casa": "Consegues imaginar quem vive no outro lado do mundo?",
     "Sala de Estar": "Já alguma vez tiveste um encontro às escuras?",
+    "Laboratório": "Gostas de fazer experiências no laboratório?",
   }
 };
 
