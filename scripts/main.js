@@ -83,6 +83,7 @@ function maybeTriggerQuestion(level) {
     const [randomName, question] = questions[Math.floor(Math.random() * questions.length)];
 
     document.getElementById("question_text").innerText = question;
+    document.getElementById("question").style.display = "block";
 
     document.getElementById("yes").onclick = () => {
       currentIntimacyLevel = nextLevel;
