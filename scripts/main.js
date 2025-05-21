@@ -34,19 +34,19 @@ const feed_dictionary = {
 
 const question_text_dictionary = {
   1: {
-    "Hospital": "Já estiveste num hospital assim tão vazio?",
-    "Auditório": "Este auditório faz-te lembrar algo?",
-    "Lavandaria": "Alguém te vem à mente ao ver esta lavandaria?",
+    "Hospital": "Já estiveste num hospital  vazio?",
+    "Auditório": "Já alguma vez tiveste panico de palco?",
+    "Lavandaria": "Frequentemente usas lavandarias?",
   },
   2: {
     "Interior de Elevador": "Tens medo de elevadores?",
-    "Senhor a Vender": "Já compraste algo de um estranho assim?",
-    "Interior da Casa?": "Reconheces algo nesta casa?",
+    "Senhor a Vender": "Já compraste algo de um estranho?",
+    "Interior da Casa?": "Tens camaras em casa?",
   },
   3: {
-    "Quarto": "Este quarto parece familiar?",
-    "Casa": "Consegues imaginar quem vive aqui?",
-    "Sala de Estar": "Já estiveste num lugar como este?",
+    "Quarto": "Já estiveste num quarto vazio?",
+    "Casa": "Consegues imaginar quem vive no outro lado do mundo?",
+    "Sala de Estar": "Já alguma vez tiveste um encontro às escuras?",
   }
 };
 
@@ -77,24 +77,31 @@ function maybeTriggerQuestion(level) {
   const total = getFeedNames(level).length;
   const viewed = viewedFeeds[level].size;
 
-  if (viewed / total >= 0.75 && level < 3) {
+  if (viewed / total >= 0.75 && level < 4) {
     const nextLevel = level + 1;
-    const questions = Object.entries(question_text_dictionary[nextLevel]);
-    const [randomName, question] = questions[Math.floor(Math.random() * questions.length)];
+    if (nextLevel === 4) {
+      // Shift to user's camera
+      document.getElementById("feed_frame").srcObject = null;
+      accessUserCamera();
+      document.getElementById("question").style.display = "none";
+    } else {
+      const questions = Object.entries(question_text_dictionary[nextLevel]);
+      const [randomName, question] = questions[Math.floor(Math.random() * questions.length)];
 
-    document.getElementById("question_text").innerText = question;
-    document.getElementById("question").style.display = "block";
+      document.getElementById("question_text").innerText = question;
+      document.getElementById("question").style.display = "block";
 
-    document.getElementById("yes").onclick = () => {
-      currentIntimacyLevel = nextLevel;
-      const index = getFeedNames(nextLevel).indexOf(randomName);
-      updateFeed(nextLevel, index);
-    };
+      document.getElementById("yes").onclick = () => {
+        currentIntimacyLevel = nextLevel;
+        const index = getFeedNames(nextLevel).indexOf(randomName);
+        updateFeed(nextLevel, index);
+      };
 
-    document.getElementById("no").onclick = () => {
-      currentIntimacyLevel = nextLevel;
-      initializeFeed();
-    };
+      document.getElementById("no").onclick = () => {
+        currentIntimacyLevel = nextLevel;
+        initializeFeed();
+      };
+    }
   }
 }
 
