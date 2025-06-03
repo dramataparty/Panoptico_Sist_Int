@@ -12,25 +12,28 @@
 </head>
 <body>
   <main>
-    <h1>Panopticon</h1>
+  <h1>Panopticon</h1>
 
-    <section id="controls">
+  <div class="frame-container">
+    <img id="feed_frame" src="" alt="Feed de vídeo">
+    <img src="media/tvmoldura2.png" class="frame-overlay" alt="Frame Overlay" />
+  </div>
+
+  <section id="interaction-panel">
+    <div id="controls">
       <button id="prevFeed">Prévio</button>
       <button id="nextFeed">Próximo</button>
-    </section>
+    </div>
 
-    <section id="question" style="display: none;">
+    <div id="question" style="display: none;">
       <p id="question_text"></p>
       <div id="question_buttons">
         <button id="yes">Sim</button>
         <button id="no">Não</button>
       </div>
-    </section>
-
-    <div class="frame-container">
-      <img id="feed_frame" src="" alt="Feed de vídeo">
-      <img src="media/tvmoldura2.png" class="frame-overlay" alt="Frame Overlay" />
     </div>
-  </main>
+  </section>
+</main>
+
 </body>
 </html>

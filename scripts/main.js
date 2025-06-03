@@ -95,31 +95,45 @@ function maybeTriggerQuestion(level) {
 
   if (viewed / total >= 0.75 && level < 4) {
     const nextLevel = level + 1;
+    const controls = document.getElementById("controls");
+    const questionElem = document.getElementById("question");
+    const questionText = document.getElementById("question_text");
+    const questionButtons = document.getElementById("question_buttons");
+
     if (nextLevel === 4) {
-      // Shift to user's camera
       document.getElementById("feed_frame").srcObject = null;
       accessUserCamera();
-      document.getElementById("question").style.display = "none";
+      questionElem.style.display = "none";
+      controls.style.display = "flex"; // Reexibe os botões se era o último nível
     } else {
       const questions = Object.entries(question_text_dictionary[nextLevel]);
       const [randomName, question] = questions[Math.floor(Math.random() * questions.length)];
 
-      document.getElementById("question_text").innerText = question;
-      document.getElementById("question").style.display = "block";
+      // Esconde controles e mostra pergunta
+      controls.style.display = "none";
+      questionText.innerText = question;
+      questionElem.style.display = "block";
 
       document.getElementById("yes").onclick = () => {
         currentIntimacyLevel = nextLevel;
         const index = getFeedNames(nextLevel).indexOf(randomName);
         updateFeed(nextLevel, index);
+        // Esconde pergunta e mostra controles
+        questionElem.style.display = "none";
+        controls.style.display = "flex";
       };
 
       document.getElementById("no").onclick = () => {
         currentIntimacyLevel = nextLevel;
         initializeFeed();
+        // Esconde pergunta e mostra controles
+        questionElem.style.display = "none";
+        controls.style.display = "flex";
       };
     }
   }
 }
+
 
 function initializeFeed() {
   const feedNames = getFeedNames(currentIntimacyLevel);
@@ -130,7 +144,7 @@ function initializeFeed() {
 function accessUserCamera() {
   navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(stream => {
-      document.getElementById('video').srcObject = stream;
+      document.getElementById('feed_frame').srcObject = stream;
     })
     .catch(err => {
       console.error("Erro ao acessar a câmera: " + err);
@@ -140,7 +154,7 @@ function accessUserCamera() {
 function loadFeed(url) {
   const feedFrame = document.getElementById("feed_frame");
 
-  if (url.match(/\.(jpg|mjpg|gif)$/i)) {
+  if (url.match(/\.(mjpg|gif)$/i)) {
     const img = document.createElement("img");
     img.id = "feed_frame";
     img.src = url;
@@ -152,29 +166,45 @@ function loadFeed(url) {
     feedFrame.src = url;
   }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   initializeFeed();
-  accessUserCamera();
-
-  document.getElementById("nextFeed").addEventListener("click", () => {
-    const feedNames = getFeedNames(currentIntimacyLevel);
-    const nextIndex = (currentFeedIndex + 1) % feedNames.length;
-    updateFeed(currentIntimacyLevel, nextIndex);
-  });
-
-  document.getElementById("prevFeed").addEventListener("click", () => {
-    const feedNames = getFeedNames(currentIntimacyLevel);
-    const prevIndex = (currentFeedIndex - 1 + feedNames.length) % feedNames.length;
-    updateFeed(currentIntimacyLevel, prevIndex);
-  });
-
-  document.getElementById("yes").addEventListener("click", () => {
-    currentIntimacyLevel = Math.min(currentIntimacyLevel + 1, 3);
-    initializeFeed();
-  });
-
-  document.getElementById("no").addEventListener("click", () => {
-    initializeFeed();
-  });
+  setupEventListeners();
 });
+
+function setupEventListeners() {
+  const nextButton = document.getElementById("nextFeed");
+  const prevButton = document.getElementById("prevFeed");
+  const yesButton = document.getElementById("yes");
+  const noButton = document.getElementById("no");
+
+  if (nextButton) {
+    nextButton.addEventListener("click", () => {
+      const feedNames = getFeedNames(currentIntimacyLevel);
+      const nextIndex = (currentFeedIndex + 1) % feedNames.length;
+      updateFeed(currentIntimacyLevel, nextIndex);
+    });
+  }
+
+  if (prevButton) {
+    prevButton.addEventListener("click", () => {
+      const feedNames = getFeedNames(currentIntimacyLevel);
+      const prevIndex = (currentFeedIndex - 1 + feedNames.length) % feedNames.length;
+      updateFeed(currentIntimacyLevel, prevIndex);
+    });
+  }
+
+  if (yesButton) {
+    yesButton.addEventListener("click", () => {
+      currentIntimacyLevel = Math.min(currentIntimacyLevel + 1, 3);
+      hideQuestionPanel();
+      initializeFeed();
+    });
+  }
+
+  if (noButton) {
+    noButton.addEventListener("click", () => {
+      hideQuestionPanel();
+      initializeFeed();
+    });
+  }
+}
