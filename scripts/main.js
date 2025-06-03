@@ -19,16 +19,16 @@ const feed_dictionary = {
   2: {
     "Interior de Elevador": "http://72.43.190.171:83/mjpg/video.mjpg",
     "Senhor a Vender": "http://93.87.72.254:8082/mjpg/video.mjpg",
-    "Corredor": "/cgi-bin/mjpeg?resolution=640x360&quality=1&page=1746627489757&Language=0",
+    "Corredor": "http://1.245.184.66:8000/webcapture.jpg?command=snap&channel=1",
     "Porta do Quarto": "http://209.202.205.86:8080/",
     "Interior da Casa?": "http://107.131.197.123:8889/",
   },
   3: {
     "Quarto": "http://71.41.121.66:8200/#view",
-    "Sala de Máquinas": "http://113.161.46.196:8001/webcapture.jpg",
+    "Sala de Máquinas": "http://115.79.218.97:9005/snap.jpg",
     "Casa": "https://stream-ue1-bravo.dropcam.com:443/nexus_aac/0327c32c53d44f0c8dc184f79eb4afd1/playlist.m3u8?public=hMsgoEpYmc",
     "Sala de Estar": "http://46.231.208.18:9095/mjpg/video.mjpg",
-    "Laboratório": "http://129.2.146.15/jpg/image.jpg",
+    "Laboratório": "http://129.2.146.15:80/jpg/image.jpg",
   }
 };
 
@@ -88,7 +88,6 @@ function updateFeed(level, index) {
 
   maybeTriggerQuestion(level);
 }
-
 function maybeTriggerQuestion(level) {
   const total = getFeedNames(level).length;
   const viewed = viewedFeeds[level].size;
@@ -98,41 +97,73 @@ function maybeTriggerQuestion(level) {
     const controls = document.getElementById("controls");
     const questionElem = document.getElementById("question");
     const questionText = document.getElementById("question_text");
-    const questionButtons = document.getElementById("question_buttons");
+    const feedFrame = document.getElementById("feed_frame");
+
+    controls.style.display = "none";
+    questionElem.style.display = "block";
+    feedFrame.src = "media/static.gif";
 
     if (nextLevel === 4) {
-      document.getElementById("feed_frame").srcObject = null;
-      accessUserCamera();
-      questionElem.style.display = "none";
-      controls.style.display = "flex"; // Reexibe os botões se era o último nível
+      // Pergunta final antes da câmara
+      questionText.innerText = "Deseja permitir o acesso à sua câmera?";
+      
+      document.getElementById("yes").onclick = () => {
+        replaceImageWithVideo();
+        accessUserCamera();
+        currentIntimacyLevel = nextLevel;
+        questionElem.style.display = "none";
+        controls.style.display = "flex";
+      };
+
+      document.getElementById("no").onclick = () => {
+        // Recusa: permanece em estático
+        feedFrame.src = "media/static.gif";
+        currentIntimacyLevel = nextLevel;
+        questionElem.style.display = "none";
+        controls.style.display = "flex";
+      };
+
     } else {
+      // Seleciona pergunta aleatória com nome da feed associada
       const questions = Object.entries(question_text_dictionary[nextLevel]);
       const [randomName, question] = questions[Math.floor(Math.random() * questions.length)];
 
-      // Esconde controles e mostra pergunta
-      controls.style.display = "none";
       questionText.innerText = question;
-      questionElem.style.display = "block";
 
       document.getElementById("yes").onclick = () => {
         currentIntimacyLevel = nextLevel;
-        const index = getFeedNames(nextLevel).indexOf(randomName);
-        updateFeed(nextLevel, index);
-        // Esconde pergunta e mostra controles
+        viewedFeeds[nextLevel].add(randomName); // Marcar como visto
+        loadFeed(feed_dictionary[nextLevel][randomName]); // Mostrar feed correspondente
         questionElem.style.display = "none";
         controls.style.display = "flex";
       };
 
       document.getElementById("no").onclick = () => {
         currentIntimacyLevel = nextLevel;
-        initializeFeed();
-        // Esconde pergunta e mostra controles
         questionElem.style.display = "none";
         controls.style.display = "flex";
+        initializeFeed(); // Carrega qualquer feed aleatória do próximo nível
       };
     }
   }
 }
+
+
+
+function replaceImageWithVideo() {
+  const oldImg = document.getElementById("feed_frame");
+
+  const video = document.createElement("video");
+  video.id = "feed_frame";
+  video.autoplay = true;
+  video.playsInline = true;
+  video.muted = true;
+  video.style.width = "100%";
+
+  oldImg.replaceWith(video);
+}
+
+
 
 
 function initializeFeed() {
@@ -144,12 +175,15 @@ function initializeFeed() {
 function accessUserCamera() {
   navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(stream => {
-      document.getElementById('feed_frame').srcObject = stream;
+      const videoElem = document.getElementById('feed_frame');
+      videoElem.srcObject = stream;
     })
     .catch(err => {
       console.error("Erro ao acessar a câmera: " + err);
+      alert("Não foi possível acessar a câmera.");
     });
 }
+
 
 function loadFeed(url) {
   const feedFrame = document.getElementById("feed_frame");
