@@ -17,7 +17,7 @@ body {
   color: #FFFFFF;
   font-family: 'xband-ro', sans-serif;
   text-shadow: 2px 2px 4px #000000;
-  background-image: url("../media/fundo.gif");
+  background-image: url("../media/fundo2.gif");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -120,7 +120,7 @@ button:hover {
   height: 30vw;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  margin-top: 40px;
+  margin-top:55px;
   
 }
 
@@ -134,7 +134,8 @@ button:hover {
   border: none;
   box-sizing: border-box;
   z-index: 1;
-  align-self:center
+  align-self:center;
+  background-image:url("../media/static.gif")
 }
 
 /* Moldura da TV */
