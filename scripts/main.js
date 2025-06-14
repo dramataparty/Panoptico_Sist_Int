@@ -15,6 +15,7 @@ const feed_dictionary = {
     "Sweatshop": "http://96.84.21.221:8082/mjpg/video.mjpg",
     "Lavandaria": "http://82.64.237.163:8083/mjpg/video.mjpg",
     "Ginásio": "http://104.8.103.170/control/faststream.jpg?stream=full&fps=16&rand=387871",
+    "Igreja": "http://74.142.49.38:8001/mjpg/video.mjpg",
   },
   2: {
     "Interior de Elevador": "http://72.43.190.171:83/mjpg/video.mjpg",
@@ -22,6 +23,7 @@ const feed_dictionary = {
     "Corredor": "http://1.245.184.66:8000/webcapture.jpg?command=snap&channel=1",
     "Porta do Quarto": "http://209.202.205.86:8080/",
     "Interior da Casa?": "http://107.131.197.123:8889/",
+    "Jacuzzi": "http://65.152.96.74:8080/mjpg/video.mjpg",
   },
   3: {
     "Quarto": "http://71.41.121.66:8200/#view",
@@ -29,6 +31,8 @@ const feed_dictionary = {
     "Casa": "https://stream-ue1-bravo.dropcam.com:443/nexus_aac/0327c32c53d44f0c8dc184f79eb4afd1/playlist.m3u8?public=hMsgoEpYmc",
     "Sala de Estar": "http://46.231.208.18:9095/mjpg/video.mjpg",
     "Laboratório": "http://129.2.146.15:80/jpg/image.jpg",
+    "Parque infantil": "http://91.199.196.151/mjpg/video.mjpg",
+    "Rua": "http://194.44.38.196:8083/mjpg/video.mjpg",
   }
 };
 
@@ -49,6 +53,7 @@ const question_text_dictionary = {
     "Sweatshop": "Sabes o que é um sweatshop?",
     "Lavandaria": "Frequentemente usas lavandarias?",
     "Ginásio": "Costumas ir ao ginásio para aliviar o stress?",
+    "Igreja": "Alguma vez foste confessar numa igreja?",
   },
   2: {
     "Interior de Elevador": "Tens medo de elevadores?",
@@ -56,6 +61,7 @@ const question_text_dictionary = {
     "Corredor": "Já te perdeste num corredor escuro?",
     "Porta do Quarto": "Já bateste à porta de um quarto desconhecido?",
     "Interior da Casa?": "Tens câmaras em casa?",
+    "Jacuzzi": "Alguma vez tomaste banho?",
   },
   3: {
     "Quarto": "Já estiveste num quarto vazio?",
@@ -63,6 +69,8 @@ const question_text_dictionary = {
     "Casa": "Consegues imaginar quem vive no outro lado do mundo?",
     "Sala de Estar": "Já alguma vez tiveste um encontro às escuras?",
     "Laboratório": "Gostas de fazer experiências no laboratório?",
+    "Parque infantil": "Já pensaste que alguém poderá estar a espiar os teus filhos?",
+    "Rua": "Já pensaste que um desconhecido poderá saber quando sais de casa?",
   }
 };
 
